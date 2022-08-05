@@ -1,0 +1,54 @@
+
+    <table class="table striped table-border mt-4"
+            data-role="table"
+            data-cls-component="mt-10"
+            data-rows="10"
+            data-pagination="true"
+            data-show-all-pages="false"
+            data-horizontal-scroll="true"
+            data-check="true"
+            data-check-style="2"
+            data-rownum="true"
+    >
+        <thead>
+            <tr>
+                <% if(Object.keys(devices).length > 0){%>
+                    <% labels.forEach(function(labels){%>
+                        
+                        <th class="sortable-column" ><%=labels%></th>
+                        
+                    <%})%>
+                <%}%>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(Object.keys(devices).length > 0){%>
+                <% devices.forEach(device =>{%>
+                    <tr>
+                        <%for(var key in device){%>
+                            <% if(key == "PowerState" || key =="powerStatus"){%>
+                                <td class="row-data">
+                                    <div class = "power-row">
+                                        <% if(device[key] == "On" ||device[key] == "ON") {%>
+                                            <img src="images/on.png" alt="on image">
+                                        <%} else if (device[key] == "Off" || device[key] == "OFF") {%>
+                                            <img src="images/off.png" alt="off image">
+                                        <% }else{ %>
+                                            <img src="images/unknown.png" alt="unknown image">
+                                        <% } %>
+                                    </div>
+                                    
+                                    <div><%=device[key]%></div>
+                                </td>
+                            <% }else if(key == 'address'){%>
+                                <td class="row-data"><a href="https://<%=device[key]%>" target="_blank"><%=device[key]%></a></td>
+                            <% }else{ %>
+                                <td class="row-data"><%=device[key]%></td>
+                            <% } %>
+                        <%}%>
+                    </tr>
+                <%})%>
+            <%}%>
+        </tbody>
+    </table>
+

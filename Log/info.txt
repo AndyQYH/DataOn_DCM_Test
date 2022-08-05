@@ -1,0 +1,337 @@
+power(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/power)
+{
+  "value": 7476,
+  "dateTime": "2022-07-12T11:09:00-07:00"
+}
+
+thermal(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/thermal)
+{
+  "value": 28,
+  "dateTime": "2022-07-12T11:09:00-07:00"
+}
+
+health(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/health)
+{
+  "unsupported": 0,
+  "unknown": 4,
+  "fault": 4,
+  "normal": 20,
+  "components": [
+    {
+      "component": "SYSTEM",
+      "count": 4
+    },
+    {
+      "component": "VOLTAGE",
+      "count": 1
+    },
+    {
+      "component": "STORAGE",
+      "count": 0
+    },
+    {
+      "component": "FAN",
+      "count": 0
+    },
+    {
+      "component": "LOG_SERVICE",
+      "count": 0
+    },
+    {
+      "component": "TEMPERATURE",
+      "count": 0
+    },
+    {
+      "component": "MEMORY",
+      "count": 0
+    },
+    {
+      "component": "PROCESSOR",
+      "count": 0
+    },
+    {
+      "component": "WATCHDOG",
+      "count": 0
+    },
+    {
+      "component": "MANAGER",
+      "count": 0
+    },
+    {
+      "component": "POWER_SUPPLY",
+      "count": 0
+    },
+    {
+      "component": "MANAGEMENT_PORT",
+      "count": 0
+    }
+  ]
+}
+
+inventory(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/inventory)
+{
+  "totalDeviceCount": 28,
+  "supportedDeviceCount": 28,
+  "details": {
+    "resourceCategories": [
+      {
+        "categoryType": "PROCESSOR",
+        "categoryProperties": [
+          {
+            "categoryPropertyName": "ProcessorCount",
+            "categoryPropertyValue": "52"
+          }
+        ]
+      },
+      {
+        "categoryType": "MEMORY",
+        "categoryProperties": [
+          {
+            "categoryPropertyName": "TotalCapacityGiB",
+            "categoryPropertyValue": "8128.0"
+          }
+        ]
+      },
+      {
+        "categoryType": "STORAGE",
+        "categoryProperties": [
+          {
+            "categoryPropertyName": "DiskTotalCapacityGB",
+            "categoryPropertyValue": "75407.98"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+serverFirmwareOutlier(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/serverFirmwareOutlier)
+{
+  "content": [
+    {
+      "model": "PSSF132202A",
+      "version": "S03",
+      "count": 1
+    }
+  ]
+}
+
+maxInletTemperature(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/maxInletTemperature)
+{
+  "maxTemperature": 34,
+  "dcName": "DataON Labs"
+}
+
+deviceHealthStatistics(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/deviceHealthStatistics)
+{
+  "unsupported": 0,
+  "unknown": 4,
+  "fault": 4,
+  "normal": 20
+}
+
+coolingAnomaly(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/coolingAnomaly)
+{
+  "content": []
+}
+
+powerDataSummary(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/powerDataSummary?top=5&&startDateTime=2022-05-17T10:00%2B08:00)
+{
+  "topServerPowerDatas": [
+    {
+      "id": 3,
+      "name": "Cooper-n1",
+      "dateTime": "2022-07-04T23:00:00-07:00",
+      "power": 801
+    },
+    {
+      "id": 12,
+      "name": "Server - 10.4.7.45",
+      "dateTime": "2022-07-12T11:00:00-07:00",
+      "power": 789
+    },
+    {
+      "id": 14,
+      "name": "Server - 10.4.7.174",
+      "dateTime": "2022-07-04T23:00:00-07:00",
+      "power": 621
+    },
+    {
+      "id": 13,
+      "name": "superrock-bmc1.fastv2.dataonstorage.com",
+      "dateTime": "2022-07-04T23:00:00-07:00",
+      "power": 468
+    },
+    {
+      "id": 4,
+      "name": "superrock-n1",
+      "dateTime": "2022-07-04T23:00:00-07:00",
+      "power": 468
+    }
+  ],
+  "peakPower": 9621
+}
+
+MaxInletTemperatureRooms(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/topInletTemperatureRooms?top=5)
+{
+  "content": [
+    {
+      "roomId": 17,
+      "roomName": "Lab",
+      "maxTempValue": 34,
+      "dcName": "DataON Labs",
+      "dcId": 15
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/topInletTemperatureRooms?top=5"
+    }
+  ]
+}
+
+powerCapacity(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/powerCapacity)
+{
+  "powerCapacity": 10000,
+  "powerUsed": 7460
+}
+
+hotspots(https://dcm.fastv2.dataonstorage.com:8643/DcmConsole/rest/datacenters/15/hotspotss)
+{
+  "totalItems": 11,
+  "itemsPerPage": 10,
+  "page": 0,
+  "dataList": [
+    {
+      "deviceId": 5,
+      "entityName": "superrock-n2",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > superrock-n2",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 32
+    },
+    {
+      "deviceId": 6,
+      "entityName": "custdemo1",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > custdemo1",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 32
+    },
+    {
+      "deviceId": 7,
+      "entityName": "custdemo2",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > custdemo2",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 34
+    },
+    {
+      "deviceId": 8,
+      "entityName": "Server - 10.4.7.15",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > Server - 10.4.7.15",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 30
+    },
+    {
+      "deviceId": 12,
+      "entityName": "Server - 10.4.7.45",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > Server - 10.4.7.45",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 31
+    },
+    {
+      "deviceId": 13,
+      "entityName": "superrock-bmc1.fastv2.dataonstorage.com",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > superrock-bmc1.fastv2.dataonstorage.com",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 32
+    },
+    {
+      "deviceId": 14,
+      "entityName": "Server - 10.4.7.174",
+      "entityPath": [
+        24,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.4.7.0/24 > Server - 10.4.7.174",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 30
+    },
+    {
+      "deviceId": 34,
+      "entityName": "Server - 10.3.7.40",
+      "entityPath": [
+        37,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.3.7.0/24 > Server - 10.3.7.40",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 32
+    },
+    {
+      "deviceId": 35,
+      "entityName": "Server - 10.3.7.13",
+      "entityPath": [
+        37,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.3.7.0/24 > Server - 10.3.7.13",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 34
+    },
+    {
+      "deviceId": 36,
+      "entityName": "Server - 10.3.7.58",
+      "entityPath": [
+        37,
+        20,
+        17,
+        15
+      ],
+      "entityPathStr": "DataON Labs > Lab > Back > 10.3.7.0/24 > Server - 10.3.7.58",
+      "dateTime": "2022-07-12T11:33:00-07:00",
+      "value": 34
+    }
+  ]
+}
