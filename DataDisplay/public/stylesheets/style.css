@@ -1,5 +1,3 @@
-
-
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -15,30 +13,6 @@ thead{
   top: 0;
 }
 
-.DataOn-Logo{
-  max-height:80px;
-}
-
-.header.div{
-  display:flex;
-  justify-content:space-between
-}
-
-.pagination {
-    flex-wrap: wrap;
-}
-
-.table .sortable-column:nth-child(3){
-  position:sticky;
-  left:0;
-  opacity: 100%;
-}
-
-.checkbox.table-service-check.style2.transition-on{
-  display:flex;
-  align-items: center;
-}
-
 tr td:nth-child(3), thead th:nth-child(3){
   position:sticky;
   left:0;
@@ -50,7 +24,7 @@ tr td:nth-child(-n+3),thead th:nth-child(-n+3){
 }
 
 
-tr td:nth-child(5) div{
+tr td:nth-child(5) div,tr td:nth-child(8) div{
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -79,4 +53,80 @@ tbody tr:nth-child(even) td{
 table thead th{
   background-color: white;
 }
+
+
+.DataOn-Logo{
+  max-height:80px;
+}
+
+.header.div{
+  display:flex;
+  justify-content:space-between
+}
+
+.pagination {
+    flex-wrap: wrap;
+}
+
+.table .sortable-column:nth-child(3){
+  position:sticky;
+  left:0;
+  opacity: 100%;
+}
+
+.checkbox.table-service-check.style2.transition-on{
+  display:flex;
+  align-items: center;
+}
+
+.h-menu button{
+  display:flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-right:5px;
+}
+
+.session-select{
+  max-width: 50%;
+  min-width: 30%;
+}
+
+.button-nav{
+  display:flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.button-nav > .h-menu{
+  display:flex;
+  flex-wrap: wrap;
+  margin-top:3%;
+}
+
+.form-group{
+  display:flex;
+  flex-direction: column;
+}
+
+.form-group input, .form-group button{
+  max-width: 50%;
+}
+
+.form-session{
+  display:none;
+  opacity: 0;
+  padding: 2%;
+  min-width:calc(50% + 165px);
+  border: 1px solid grey;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  transition:1s;
+}
+
+.form-wrapper{
+  transform: translateX(25%);
+}
+
+
+
+
 

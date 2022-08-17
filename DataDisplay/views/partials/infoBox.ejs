@@ -1,0 +1,75 @@
+<!-- 
+<div class="alert info" id="info-msg">
+    <span class="closebtn" >&times;</span>
+    <div class="info-box-content">
+        <h3>Request Received! Processing ...</h3>
+        <p>Please wait while we make update to the system ...</p>
+    </div>
+</div>
+
+<div class="alert success" id="green-msg">
+    <span class="closebtn" >&times;</span>
+    <div class="info-box-content">
+        <h3>Request Completed!</h3>
+        <p>Check the table for updates!</p>
+    </div>
+</div>
+
+<div class="alert warning" id="yellow-msg" >
+    <span class="closebtn">&times;</span>
+    <div class="info-box-content">
+        <h3>OOPS! Something went wrong ...</h3>
+        <p>Please try again later ...</p>
+    </div>
+</div>
+-->
+
+<style>
+
+    .alert{
+        padding: 20px;
+        color:white;
+        background-color: #f44336;
+        opacity:1;
+        transition: 0.6s;
+        margin-bottom: 15px;
+    }
+
+    .info-box{
+        position:relative;
+        margin: 0 0 2% 0;
+    }
+   
+    .closebtn{
+        margin-left: 15px;
+        color:white;
+        font-weight:bold;
+        float:right;
+        cursor:pointer;
+        line-height:30px;
+        font-size:30px;
+        text-align: center;
+        transition: 0.5s;
+        position: relative;
+
+    }
+
+    .closebtn:hover{
+        color:black !important;
+    }
+    
+    .info-box-content{
+        margin-right:10%;
+    }
+    #info-msg{
+        background-color: #2196F3;
+    }
+
+    #green-msg{
+        background-color: #04AA6D;
+    }
+
+    #yellow-msg{
+        background-color: #ff9800;
+    }
+</style>
