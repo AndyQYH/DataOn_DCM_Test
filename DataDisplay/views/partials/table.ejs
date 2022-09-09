@@ -1,5 +1,4 @@
-
-    <table class="table striped table-border mt-4" id = "table-main"
+<table class="table striped table-border mt-4" id = "table-main"
             data-role="table"
             data-cls-component="mt-10"
             data-rows="10"
@@ -23,34 +22,72 @@
             </tr>
         </thead>
         <tbody>
-            <% if(Object.keys(devices).length > 0){%>
-                <% devices.forEach(device =>{%>
-                    <tr>
-                        <%for(var key in device){%>
-                            <% if(key == "PowerState" || key =="powerStatus" || key == "IndicatorLED"){%>
-                                <td class="row-data" id = "img-row">
-                                    <div class = "power-row">
-                                        <% if(device[key] == "On" ||device[key] == "ON") {%>
-                                            <img src="images/on.png" alt="on image">
-                                        <%} else if (device[key] == "Off" || device[key] == "OFF") {%>
-                                            <img src="images/off.png" alt="off image">
-                                        <%} else if (device[key] == "Blinking") {%>
-                                            <img src="images/blinking.png" alt="off image">
-                                        <% }else{ %>
-                                            <img src="images/unknown.png" alt="unknown image">
-                                        <% } %>
-                                    </div>
-                                    
-                                    <div class = "power-status"><%=device[key]%></div>
-                                </td>
-                            <% }else if(key == 'address'){%>
-                                <td class="row-data"><a href="https://<%=device[key]%>" target="_blank"><%=device[key]%></a></td>
-                            <% }else{ %>
-                                <td class="row-data"><%=device[key]%></td>
-                            <% } %>
+            <%if(user == 'guest'){%>
+                <% if(Object.keys(devices).length > 0){%>
+                    <% devices.forEach(device =>{%>
+                        <%if(device["address"] == '10.4.7.43' || device["address"] == '10.4.7.79'){%>
+                            <tr>
+                                <%for(var key in device){%>
+                                    <% if(key == "PowerState" || key =="powerStatus" || key == "IndicatorLED"){%>
+                                        <td class="row-data" id = "img-row">
+                                            <div class = "power-row">
+                                                <% if(device[key] == "On" ||device[key] == "ON") {%>
+                                                    <img src="images/on.png" alt="on image">
+                                                <%} else if (device[key] == "Off" || device[key] == "OFF") {%>
+                                                    <img src="images/off.png" alt="off image">
+                                                <%} else if (device[key] == "Blinking") {%>
+                                                    <img src="images/blinking.png" alt="off image">
+                                                <% }else{ %>
+                                                    <img src="images/unknown.png" alt="unknown image">
+                                                <% } %>
+                                            </div>
+                                            
+                                            <div class = "power-status"><%=device[key]%></div>
+                                        </td>
+                                    <% }else if(key == 'address'){%>
+                                        <td class="row-data"><a href="https://<%=device[key]%>" target="_blank"><%=device[key]%></a></td>
+                                    <% }else if(key == 'Boot'){%>
+                                
+                                    <% }else{ %>
+                                        <td class="row-data"><%=device[key]%></td>
+                                    <% } %>
+                                <%}%>
+                            </tr>
                         <%}%>
-                    </tr>
-                <%})%>
+                    <%})%>
+                <%}%>
+            <%}else{%>
+                <% if(Object.keys(devices).length > 0){%>
+                    <% devices.forEach(device =>{%>
+                        <tr>
+                            <%for(var key in device){%>
+                                <% if(key == "PowerState" || key =="powerStatus" || key == "IndicatorLED"){%>
+                                    <td class="row-data" id = "img-row">
+                                        <div class = "power-row">
+                                            <% if(device[key] == "On" ||device[key] == "ON") {%>
+                                                <img src="images/on.png" alt="on image">
+                                            <%} else if (device[key] == "Off" || device[key] == "OFF") {%>
+                                                <img src="images/off.png" alt="off image">
+                                            <%} else if (device[key] == "Blinking") {%>
+                                                <img src="images/blinking.png" alt="off image">
+                                            <% }else{ %>
+                                                <img src="images/unknown.png" alt="unknown image">
+                                            <% } %>
+                                        </div>
+                                        
+                                        <div class = "power-status"><%=device[key]%></div>
+                                    </td>
+                                <% }else if(key == 'address'){%>
+                                    <td class="row-data"><a href="https://<%=device[key]%>" target="_blank"><%=device[key]%></a></td>
+                                <% }else if(key == 'Boot'){%>
+                            
+                                <% }else{ %>
+                                    <td class="row-data"><%=device[key]%></td>
+                                <% } %>
+                            <%}%>
+                        </tr>
+                    <%})%>
+                <%}%>
             <%}%>
         </tbody>
     </table>

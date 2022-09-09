@@ -2,10 +2,10 @@ import requests
 import urllib3
 from requests.auth import HTTPBasicAuth
 import certifi
-import ssl
 from flask import Flask, redirect, url_for, request
 import time
 import json
+import ssl
 
 sessions = {}
 
@@ -65,44 +65,67 @@ def waitForResourceAvailable(response, timeout, timewait):
             break
 
 print(certifi.where())
-print(ssl.OPENSSL_VERSION)
+
 
 app = Flask(__name__)
-
 
 @app.route('/',methods = ['POST', 'GET'])
 def predict():
    if request.method == 'POST':
 
+        print(request.json)
         username = request.json['credentials'][0]
         password = request.json['credentials'][1]
         b64str = get_basic_auth_token(username,password)
+        
+        auth = request.authorization
+        auth = get_basic_auth_token(auth.username,auth.password)
 
         print("encode:",b64str)
+        print("header auth:", auth)
 
-        for key,session in sessions.items():
-            if b64str == key:
-                s = session
-                return
-            else:
-                s = requests.Session()
-                s.headers.update({'Accept': 'application/json'})
-                s.headers.update({'Authorization': b64str})
-                sessions[s.headers.get('Authorization')] = s
-        
+        s = requests.Session()
 
-        print(sessions)
+        if(len(sessions) <= 0):
+            print('no sessions, adding a new one...')
+            
+            s.headers.update({'Accept': 'application/json'})
+            s.headers.update({'Authorization': auth})
+            s.headers.update({'Keep-Alive': 'timeout=10s, max=100'})
+            s.headers.update({'max-age': '60'})
+            sessions[auth] = s
+
+        else:
+
+            for key,session in sessions.items():
+                if auth == key:
+                    print('using existing session ...')
+                    s = session
+                    if(s.headers['max-age'] == '0'):
+                        print('session timed out or have not been created')
+                        return 'session timed out or have not been created'
+                    else:
+                        break
+
+            
+
+        print('sessions')
+        print(s)
+
+        print('headers:')
+        print(s.headers)
+
+        print('cookies:')
+        print(s.cookies)
 
         credentials = request.json['status']
         action = request.json['action'][0]
         print(credentials)
         print(action)
-        source = "devices"
-        url_POST = "http://localhost:3000"
 
         for query in credentials:
             url = "https://"+query[0]+"/redfish/v1/Systems/"+query[1]
-            if action == 'bootPXE':
+            if action == 'boot':
                 print("inside boot")
                 bootOption = query[-1]
                 response = set_next_boot_onetime_boot_device(url,bootOption,s)

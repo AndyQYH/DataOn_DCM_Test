@@ -3,9 +3,10 @@ import dotenv from 'dotenv'
 import expressLayouts from 'express-ejs-layouts'
 import bodyParser from 'body-parser'
 import methodOverride from 'method-override'
-
+import sqliteDB from './models/db'
+import mainRouter from './routes/main'
 import indexRouter from './routes/index'
-import deviceRouter from './routes/devices'
+import userRouter from './routes/users'
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -14,7 +15,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 const app: Express = express()
-
 const PORT:number|undefined = parseInt(process.env.PORT as string);
 const HOST:string = process.env.SERVER as string
 console.log("port: " + PORT)
@@ -22,11 +22,12 @@ console.log("port: " + PORT)
 app.set('view engine', 'ejs')
 app.set('views',__dirname+'/views')
 app.set('layout', 'layouts/layout')
-
 app.use(expressLayouts)
 app.use(methodOverride('_method'))
-app.use('/',indexRouter)
-app.use('/devices',indexRouter)
+app.use('/', mainRouter)
+app.use('/users',indexRouter)
+app.use('/log-in',userRouter)
+//app.use('/sessions',sessionRouter)
 app.use(express.static('public'))
 app.use(express.static('node_modules'))
 app.use(bodyParser.urlencoded({ extended: true }))

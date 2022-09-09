@@ -1,0 +1,76 @@
+<form class ='user register-form'  method = "POST" action = "/log-in/register" enctype="application/json" data-role="validator" data-interactive-check="true" data-required-mode="false">
+    <div class = 'status register'>
+        <div class="alert success" id="green-msg">
+            <span class="closebtn" >&times;</span>
+            <div class="info-box-content">
+                <h3>success in creating user!</h3>
+            </div>
+        </div>
+        <h5>you can ...</h5>
+        <li class = "lst success">
+            <a href="/log-in/register">go back to register</a>
+            <a href="/log-in">go to log-in</a>
+        </li>
+    </div>
+    
+    <div class="form-group register">
+        <label>Email address</label>
+        <input type="email" class="form-input"placeholder="Enter email" data-validate="required email" name="email"/>
+        <span class="invalid_feedback">
+            invalid email
+        </span>
+    </div>
+    <div class="form-group register">
+        <label>Username</label>
+        <input type="text" class="form-input" placeholder="Enter username" data-validate="required" name="username"/>
+        <span class="invalid_feedback">
+            invalid username
+        </span>
+    </div>
+    <div class="form-group register">
+        <label>Password</label>
+        <div class = "password-wrapper">
+            <input type="password" class="form-input" id = "password1" placeholder="Enter password" data-validate="required custom=myValidatePassword2" name="password"/>
+            <button class="button show"
+                    data-role="hint"
+                    data-hint-position="top"
+                    data-hint-text="show password"
+                    type ='button'>
+            </button>
+            <button class="button hide"
+                    data-role="hint"
+                    data-hint-position="top"
+                    data-hint-text="hide password"
+                    type ='button'>
+            </button>
+            <span class="invalid_feedback">
+                password length should be greater than 1
+            </span>
+        </div>   
+    </div>
+    
+    <div class="form-group register">
+        <label>Input password again</label>
+        <input class="form-input" type="password" id = "password2" data-validate="required custom=myValidatePassword" name="password2">
+        <span class="invalid_feedback">
+            password1 and password2 are not the same
+        </span>
+    </div>
+    <div class="form-group register">
+        <button class="button success" type="submit" disabled >Register</button>
+        <input type="reset" class="button" value="Cancel" >
+    </div>
+</form>
+
+<script>
+    $('#password1').on("input",function(){
+        console.log($(this).val())
+        if($(this).val() == '' || $(this).val() == null){
+            $('.password-wrapper .invalid_feedback').css('display','block')
+            $('.button.success').attr('disabled',true)
+        }else{
+            $('.password-wrapper .invalid_feedback').css('display','none')
+            //$('.button.success').attr('disabled',false)
+        }
+    })
+</script>

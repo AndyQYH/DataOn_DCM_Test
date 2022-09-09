@@ -1,0 +1,107 @@
+ul{
+    list-style: none;
+}
+
+
+.user.sec.main{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.user.sec.main > *{
+    display:flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+
+.user.sec.main.side{
+    flex-basis:20%;
+    min-width: 300px;
+    max-height: auto;
+    
+    flex-grow: 1.5;
+    justify-content: center;
+    top:10%;
+    
+}
+
+.user.sec.main.side img,.user.sec.main.intro img{
+    width: 100%;
+    max-width: 500px;
+    min-width: 300px;
+    min-height: auto;
+    max-height:500px;
+}
+
+.user.sec.main.intro{
+    text-align: center;
+    flex-basis: 40%;
+    flex-grow: 0;
+    min-height:500px;
+    min-width: 400px;
+    background: linear-gradient(217deg, rgb(235,169,55), rgba(255,0,0,0) 70.71%),
+                linear-gradient(127deg, rgba(255, 185, 81, 1), rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, rgba(248, 123, 21, 1), rgba(0,0,255,0) 70.71%);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+
+.user.sec.main.intro h3{
+    text-align: center;
+}
+
+
+
+.user.sec.main.info{
+    margin-bottom: 15px;
+}
+
+.user.sec.main.actions ul {
+    position: relative;
+    display: inline;
+    margin: 0 auto;
+}
+
+.user.sec.main.actions ul a{
+    margin: 10px;
+}
+
+.lst.demo:hover > .hint.demo{
+    visibility: visible;
+}
+
+.lst.login:hover > .hint.login{
+    visibility: visible;
+}
+
+.user.sec.main.actions ul > li{
+    display: inline-block;
+    border: 1px solid black;
+    padding: 5px;
+    transition: 0.2s ease-in-out;
+}
+
+.user.sec.main.actions ul > li > a{
+    color:black;
+    
+}
+
+
+.hint{
+    min-width: 200px;
+    visibility: hidden;
+    background-color: rgb(255,255,194);
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    transition: 0.2s ease-in-out;
+    position: absolute;
+    z-index: 1;
+}
+
+

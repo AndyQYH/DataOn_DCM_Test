@@ -8,7 +8,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const method_override_1 = __importDefault(require("method-override"));
+const main_1 = __importDefault(require("./routes/main"));
 const index_1 = __importDefault(require("./routes/index"));
+const users_1 = __importDefault(require("./routes/users"));
 if (process.env.NODE_ENV !== 'production') {
     dotenv_1.default.config();
 }
@@ -21,8 +23,10 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 app.use(express_ejs_layouts_1.default);
 app.use((0, method_override_1.default)('_method'));
-app.use('/', index_1.default);
-app.use('/devices', index_1.default);
+app.use('/', main_1.default);
+app.use('/users', index_1.default);
+app.use('/log-in', users_1.default);
+//app.use('/sessions',sessionRouter)
 app.use(express_1.default.static('public'));
 app.use(express_1.default.static('node_modules'));
 app.use(body_parser_1.default.urlencoded({ extended: true }));

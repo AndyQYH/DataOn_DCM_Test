@@ -2,49 +2,26 @@
     <div id="msg-menu">
         <%- include('partials/infoBox') %>
     </div>
-    <nav class = "button-nav">
-        <select data-role="select" data-prepend="Select a Web Session:" class = "session-select">
-            <optgroup label="Available Web Sessions">
-                <% if(Object.keys(sessions).length > 0){%>
-                    <% for(var i = 0; i < sessions.length; i++){%>
-                        <option value="<%=sessions[i][i]%>"><%=sessions[i][i]%></option>
-                    <%}%>
-                <%}%>
-                <option value="guest" selected="selected">guest user</option>
-            </optgroup>
-        </select>
-        <button id = "btn-add-session" class = "button dark outline" alt = "selected" disabled>Add New Web Session</button>
-        <form class="form-session">
-            <div class = "form-wrapper">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="username" placeholder="Username"/>
-                    <small class="text-muted">We'll never share your username with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" placeholder="Enter Password"/>
-                </div>
-                <div class="form-group">
-                    <input type="checkbox" data-role="checkbox" data-caption="Remember Me" checked>
-                </div>
-                <div class="form-group">
-                    <button class="button success">Create New Session</button>
-                    <input type="button" class="button" value="Cancel" onclick="document.querySelector('.form-session').style.display = 'none'">
+    <%if(status > 400){%>
+        <div id="msg-menu">
+            <%- include('partials/error') %>
+        </div>
+    <%}else{%>
+        <%if(devices.length <= 0){%>
+            <div class="alert warning" id="yellow-msg" >
+                <span class="closebtn">&times;</span>
+                <div class="info-box-content">
+                    <h3>Can not establish connection to Internal Datacenter ...</h3>
+                    <p>Please check the internet/proxy and the server and try again ...</p>
                 </div>
             </div>
-            
-        </form>
-        <ul class="h-menu">
-            <button id = "btn-power-on" class = "button dark outline" disable><img src="images/power.png" alt="powerON"><div>Power On</div></button>
-            <button id = "btn-power-off" class = "button dark outline" disable><img src="images/power.png" alt="powerOFF"><div>Power Off</div></button>
-            <button id = "btn-restart" class = "button dark outline" disable><img src="images/refresh.png" alt="restart"><div>Restart</div></button>
-            <button id = "btn-led" class = "button dark outline" disable><img src="images/LED.png" alt="LED"><div>Indicator LED</div></button>
-            <button id = "btn-ref" class = "button dark outline" disable><img src="images/refresh.png" alt="refresh"><div>Refresh Page</div></button>
-            <button id = "btn-boot-pxe" class = "button dark outline" disable><img src="images/boot.png" alt="boot"><div>Boot With PXE</div></button>
-        </ul>
-    </nav>
-    <div>
-        <%- include('partials/table') %>
-    </div>
+        <%}%>
+        <div class = 'user-interface'>
+            <%- include('partials/user-interface') %>
+        </div>
+        <div>
+            <%- include('partials/table') %>
+        </div>
+    <%}%>
+    
 </section>

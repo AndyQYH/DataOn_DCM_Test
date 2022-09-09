@@ -1,0 +1,50 @@
+<div id="msg-menu">
+    <%- include('partials/infoBox') %>
+</div>
+<section class = 'user sec'>
+    <%-include('partials/register')%>
+</section>
+
+<script>
+    async function createMsgFade(ms){
+        var close
+        await new Promise(resolve =>setTimeout(resolve,1000))
+
+        close = document.getElementsByClassName('closebtn')
+        
+        for(var i = 0; i < close.length; i++){
+            
+            let div = close[i].parentElement
+            
+            setTimeout(function(){
+                div.style.opacity = "0"
+            }, ms)
+
+            setTimeout(function(){
+                div.style.display = "none"
+            }, ms+500)
+        }
+    }
+
+    function createMsgEvent(){
+        let close = document.getElementsByClassName('closebtn')
+
+        while(close == undefined || close == null){
+            close = document.getElementsByClassName('closebtn') 
+            console.log("close = " + close)
+        }
+
+        for(var i = 0; i < close.length; i++){
+            close[i].onclick = function(){
+                    let div = this.parentElement
+                    div.style.opacity = "0"
+                    setTimeout(function(){
+                    div.style.display = "none"
+                    }, 500)
+            }
+        }
+    }
+
+    createMsgEvent()
+
+</script>

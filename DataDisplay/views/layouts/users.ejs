@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DCM-Redfish Log in</title>
+    <%- include('../partials/head') %>
+    <script defer src="/javascripts/users.js"></script>
+</head>
+<body>
+    <header class = "main header">
+        <%- include('../partials/header') %>
+    </header>
+    
+    <section class = "main section">
+        <div class = "content-wrapper">
+            <div class = "logo-wrapper">
+                <a href="/"><img class = "DataOn-Logo" src="images/DataON-Logo.png" alt="DataOn Logo"></a>
+                <h3><%=userAction + ' for DataOn Web GUI'%></h3>
+            </div>
+            
+            <%- body %>
+        </div>  
+    </section>
+
+    <footer class = "main footer">
+        <%- include('../partials/footer') %>
+    </footer>
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+</body>
+</html>

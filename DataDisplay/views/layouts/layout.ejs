@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>DCM-Redfish Interface</title>
     <%- include('../partials/head') %>
+    <script defer src = "/javascripts/table.js"></script>
+    <script defer src = "/javascripts/session.js"></script>
 </head>
 <body>
     <header class = "main header">
@@ -11,6 +14,10 @@
     <section class = "main section">   
         <%- body %>
     </section>
+
+    <footer class = "main footer">
+        <%- include('../partials/footer') %>
+    </footer>
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
 </body>
 </html>

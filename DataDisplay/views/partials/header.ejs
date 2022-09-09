@@ -1,20 +1,39 @@
 <div class = "header div">
+    <a href="/"><img class = "DataOn-Logo" src="images/DataON-Logo.png" alt="DataOn Logo"></a>
     <h1>DCM / Redfish Web Interface</h1>
-    <img class = "DataOn-Logo"src="images/DataON-Logo.png" alt="DataOn Logo">
 </div>
 <nav>
     <ul class="h-menu">
-        <li><a href="#">Home</a></li>
-        <li>
+        <li class = 'lst-left'><a href="/">Home</a></li>
+        <li class = 'lst-left'>
             <a href="#" class="dropdown-toggle">Products</a>
             <ul class="d-menu" data-role="dropdown">
-                <li><a href="#">Windows 10</a></li>
-                <li><a href="#">Office 365</a></li>
+                <li><a href="https://www.dataonstorage.com/windows-server-2022/">Windows Server 2022</a></li>
+                <li><a href="https://www.dataonstorage.com/solutions/dataon-azs-integrated-systems-for-azure-stack-hci/">Integrated System for Azure Stack HCI</a></li>
                 <li class="divider bg-lightGray"></li>
-                <li><a href="#">Skype</a></li>
+                <li><a href="https://www.dataonstorage.com/must/">DataOn MUST</a></li>
             </ul>
         </li>
-        <li><a href="#">Refresh</a></li>
-        <li><a href="#">Contacts</a></li>
+        <li class = 'lst-left'><a href="https://www.dataonstorage.com/">About</a></li>
+
+        
+        
+        <%if(user != '' && user != undefined && user != 'guest'){%>
+            <li class = 'lst-right' id = 'user-tab'>
+                <a href="#" class="dropdown-toggle"><%= 'user: ' + user%></a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="/users/<%=user%>">Profile</a></li>
+                    <li><a href="/settings">Setting</a></li>
+                    <li class="divider bg-lightGray"></li>
+                    <li><a href="/users/<%=user%>/sign-out">Sign out</a></li>
+                </ul>
+            </li>
+        <%}else{%>
+            <li class = 'lst-right'><a href="/log-in/register">Sign up</a></li>
+            <li class = 'lst-right'><a href="/log-in">Log in</a></li>
+        <%}%>
+            
+        
+        
     </ul>
 </nav>

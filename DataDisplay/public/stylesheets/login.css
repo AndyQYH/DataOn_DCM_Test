@@ -1,0 +1,164 @@
+body{
+    width:100%;
+    min-height:100%;
+}
+
+.main.section{
+    width:100%;
+    max-height:100%;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid grey;
+    padding-top:50px;
+    padding-bottom:50px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.main.section::after{
+    content: ' ';
+    display: block;
+    position: absolute;
+    top:-150%;
+    left:-100%;
+    width: 300%;
+    height: 400%;
+    opacity: 0.06;
+    background-image: url('../images/DataON-Logo.png');
+    background-repeat: repeat;
+    background-size: 300px;
+    animation: slider 20s infinite linear;
+    z-index:-1;
+}
+
+.user.sec{
+    width:100%;
+    position: relative
+}
+
+.user.sec .alert{
+    max-width:100%;
+    margin: 0 auto;
+}
+
+.user.login-form,.user.register-form{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    min-width: 300px;
+    max-width: 1200px;
+    padding:20px;
+    opacity:1;
+    background-color:rgba(245, 214, 164, 0.8);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.user.login-form .button.success,.user.register-form .button.success{
+    background-color:rgba(235,169,55, 1);
+}
+
+.user.login-form .button.success:hover,.user.register-form .button.success:hover{
+    background-color:rgb(145, 102, 29);
+}
+
+.user-interface{
+    margin-top:50px;
+}
+
+
+.DataOn-Logo.Login, .DataOn-Logo.Register{
+    opacity:0.2;
+    margin:20px;
+}
+
+
+.form-group.log-in, .form-group.register{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap !important;
+}
+
+.form-group.log-in > *, .form-group.register > *{
+    flex:100%;
+    max-width: 100%;
+}
+
+.button.show{
+    max-width: 20%;
+    height:auto;
+    background: none;
+    border: none;
+    display:block;
+    background-image: url('../images/eye.png');
+    background-size:100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.2s ease-in-out;
+}
+
+.button.show:hover, .button.hide:hover{
+    cursor: pointer;
+    transform: scale(120%);
+    transition: 0.2s ease-in-out;
+    
+}
+
+.button.hide{
+    height:auto;
+    background: none ;
+    border: none;
+    display:none;
+    background-image: url('../images/hidden.png');
+    background-size:100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.2s ease-in-out;
+}
+
+.password-wrapper{
+    display:flex;
+    flex-wrap: wrap;
+    width:100%;
+    height:100%;
+}
+
+.status.register{
+    display: none;
+    text-align: center;
+}
+
+.lst.success{
+    padding:0 10%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.lst.success a{
+    color:black;
+    margin: 10px 5px;
+    padding:5px;
+    border: 1px solid black;
+}
+
+
+#password1{
+    flex:90%;
+    max-width:90%;
+    margin-right:5px;
+}
+
+@keyframes slider{
+    0%{ 
+        transform: rotate(-45deg)  ;
+    }
+
+    50%{
+        transform: rotate(-45deg)  translateX(10%);
+       
+    }
+
+    100%{
+        transform: rotate(-45deg) ;
+        
+    }
+}

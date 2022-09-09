@@ -1,0 +1,130 @@
+<nav class = "button-nav">
+    <select data-role="select" data-prepend="Select a Web Session:" class = "session-select">
+        <optgroup label="Available Web Sessions">
+            <% if(sessions != null && sessions != undefined){%>
+                
+                    <% for(var i = 0; i < sessions.length; i++){%>
+                        <%if(i != sessions.length - 1){%>
+                            <option value="<%=sessions[i].username + ': ' + sessions[i].date%>"><%=sessions[i].username + ': ' + sessions[i].date%></option>
+                        <%}else{%>
+                            <option value="<%=sessions[i].username + ': ' + sessions[i].date%>" selected="selected"><%=sessions[i].username + ': ' + sessions[i].date%></option>
+                        <%}%>    
+                    <%}%>
+            
+                <option value="guest">guest user</option>
+            <%}else{%>
+                <option value="guest" selected="selected">guest user</option>
+            <%}%>
+        </optgroup>
+    </select>
+    <%if(user == 'guest'){%>
+        <button id = "btn-add-session" class = "button dark outline" alt = "selected" 
+                data-role="hint"
+                data-hint-position="top"
+                data-hint-text="this option is only available for logged in users"
+                disabled>
+                Add New Web Session
+        </button>
+    <%}else{%>
+        <button id = "btn-add-session" class = "button dark outline" alt = "selected" 
+                data-role="hint"
+                data-hint-position="top"
+                data-hint-text="create a authenticated session for Intel DCM / Redfish access"
+                disabled>
+                Add New Web Session
+        </button>
+    <%}%>
+    <form class="form-session create" data-role="validator" method = "post" action="/users/user/sessions" enctype="application/json" data-interactive-check="true">
+        <div class = "form-wrapper">
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-input" type="username" placeholder="Username" name="username" data-validate="required minlength=1">
+                <span class="invalid_feedback">
+                    Username has to be at least 1 character
+                </span>
+                <small class="text-muted">We'll never share your username with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-input" id = "password" type="password" placeholder="Enter Password" name="password" data-validate="required custom=myValidatePassword2 minlength=1">
+                <span class="invalid_feedback">
+                    Password has to be at least 1 character
+                </span>
+            </div>
+            <div class="form-group">
+                <label>Input password again</label>
+                <input class="form-input" id = "password2" type="password" data-validate="required custom=myValidatePassword" name="password2">
+                <span class="invalid_feedback">
+                    password1 and password2 are not the same
+                </span>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" data-role="checkbox" data-caption="Remember Me" checked>
+            </div>
+            <div class="form-group">
+                <button class="button success" type="submit" disabled>Create New Session</button>
+                <input type="button" class="button" value="Cancel" onclick="addNewSession()">
+            </div>
+        </div>
+    </form>
+    <form class="form-session time-out" data-role="validator" method = "post" action="/users/user/sessions" enctype="application/json" data-interactive-check="true">
+        <div class = "form-wrapper">
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-input" type="username" placeholder="Username" name="username" data-validate="required minlength=1" value = "" disabled>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-input" id = "password" type="password" placeholder="Enter Password" name="password" data-validate="required minlength=1">
+                <span class="invalid_feedback">
+                    Password has to be at least 1 character
+                </span>
+            </div>
+            <div class="form-group">
+                <button class="button success" type="submit" disabled>Log into session</button>
+                <input type="button" class="button" value="Cancel" onclick="addNewSession()">
+            </div>
+        </div>
+    </form>
+</nav>
+<nav class = "button-nav">
+    <ul class="h-menu">
+        <button id = "btn-power-on" class = "button dark outline" disable><img src="images/power.png" alt="powerON"><div>Power On</div></button>
+        <button id = "btn-power-off" class = "button dark outline" disable><img src="images/power.png" alt="powerOFF"><div>Power Off</div></button>
+        <button id = "btn-restart" class = "button dark outline" disable><img src="images/refresh.png" alt="restart"><div>Restart</div></button>
+        <button id = "btn-led" class = "button dark outline" disable><img src="images/LED.png" alt="LED"><div>Indicator LED</div></button>
+        <button id = "btn-ref" class = "button dark outline" disable><img src="images/refresh.png" alt="refresh"><div>Refresh Page</div></button>
+        <div class = "boot-menu">
+            <button id = "btn-boot-pxe" class = "button dark outline" disable><img src="images/boot.png" alt="boot"><div>Boot With: </div></button>
+            <select data-role="select" data-prepend="" class = "boot-select">
+                <optgroup label="Available Boot Options">
+                    <% if(Object.keys(devices).length > 0){%>
+                        <% if(Object.keys(devices[0]).length > 0){%>
+                            <%devices[0]['Boot']['BootSourceOverrideTarget@Redfish.AllowableValues'].forEach((option)=>{%>
+                                <%if(option == 'Pxe'){%>
+                                    <option value='<%=option%>' selected='selected'><%=option%></option>
+                                <%}else{%>
+                                    <option value='<%=option%>'><%=option%></option>
+                                <%}%>
+                            <%})%>
+                        <%}%>
+                    <%}%>
+                </optgroup>
+            </select>
+        </div>
+        
+    </ul>
+</nav>
+
+<script>
+    $('#password').on("input",function(){
+        console.log($(this).val())
+        if($(this).val() == '' || $(this).val() == null){
+            $('.password-wrapper .invalid_feedback').css('display','block')
+            $('.button.success').attr('disabled',true)
+        }else{
+            $('.password-wrapper .invalid_feedback').css('display','none')
+            $('.button.success').attr('disabled',false)
+        }
+    })
+</script>

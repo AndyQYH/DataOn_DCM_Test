@@ -1,22 +1,20 @@
 "use strict";
 let data_global = {};
 let protocol = 'http';
-let host = 'localhost';
-let port = 3000;
-let source = "bootdevices";
-let url = "/" + source;
+let source = "device-actions";
+var user = location.href.split('/').slice(-1)[0];
+let url = `/users/${user}/` + source;
 let msg = "";
-sessionStorage.setItem("sessionNames", []);
-sessionStorage.setItem("sessionPwds", []);
-const button_selected = document.querySelector('.btn-show-selected');
-const button_PXEboot = document.querySelector('.btn-boot-pxe');
-const button_refresh = document.querySelector('.btn-ref');
-const button_led = document.querySelector('.btn-led');
-const button_restart = document.querySelector('.btn-restart');
-const button_off = document.querySelector('.btn-power-off');
-const button_on = document.querySelector('.btn-power-on');
+console.log(url);
+const button_selected = document.querySelector('#btn-add-session');
+const button_PXEboot = document.querySelector('#btn-boot-pxe');
+const button_refresh = document.querySelector('#btn-ref');
+const button_led = document.querySelector('#btn-led');
+const button_restart = document.querySelector('#btn-restart');
+const button_off = document.querySelector('#btn-power-off');
+const button_on = document.querySelector('#btn-power-on');
 const web_select = document.querySelector('select');
-button_selected.addEventListener('click', getSelectedItem);
+button_selected.addEventListener('click', addNewSession);
 button_PXEboot.addEventListener('click', function () {
     bootPXE();
 });
@@ -39,20 +37,24 @@ web_select.addEventListener('change', function () {
     getSessions();
 });
 $(document).ready(function () {
-    console.log($('ul button'));
-    $('ul button').attr('disabled', false);
+    if (location.href.split('/').slice(-1)[0] != 'guest') {
+        $('.button.dark.outline').attr('disabled', false);
+    }
+    $('.button.success').css('disabled', true);
     console.log("inside ready function ...");
     msg = sessionStorage.getItem('msg');
     console.log("value of msg:");
     console.log(msg);
-    if (msg === 'success' || msg === 'error' || msg === 'error-server') {
+    if (msg === 'success' || msg === 'error-server') {
         createMsg(msg);
         createMsgEvent();
         createMsgFade(4500);
         sessionStorage.setItem('msg', '');
+        msg = '';
     }
+    getSessions();
 });
-function createMsg(type, timeout = 0) {
+function createMsg(type, timeout = 0, msg = '') {
     let msg_menu = document.getElementById('msg-menu');
     var info_msg;
     if (type == 'info') {
@@ -74,13 +76,23 @@ function createMsg(type, timeout = 0) {
                      </div>`;
     }
     else if (type == 'warn') {
-        info_msg = `<div class="alert warning" id="yellow-msg" >
+        if (msg != '') {
+            info_msg = `<div class="alert warning" id="yellow-msg" >
+                        <span class="closebtn num">&times;</span>
+                        <div class="info-box-content">
+                           <h3>${msg}</h3>
+                        </div>
+                  </div>`;
+        }
+        else {
+            info_msg = `<div class="alert warning" id="yellow-msg" >
                         <span class="closebtn">&times;</span>
                         <div class="info-box-content">
                            <h3>The Request Have Not Yet Received A Response ...</h3>
                            <p>Waiting for result ...</p>
                         </div>
                   </div>`;
+        }
     }
     else if (type == 'error-server') {
         info_msg = `<div class="alert" >
@@ -111,7 +123,7 @@ function createMsg(type, timeout = 0) {
 }
 async function createMsgFade(ms) {
     var close;
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 500));
     close = document.getElementsByClassName('closebtn');
     for (var i = 0; i < close.length; i++) {
         let div = close[i].parentElement;
@@ -139,16 +151,30 @@ function createMsgEvent() {
         };
     }
 }
-function getSelectedItem() {
-    var table = $('#table-main').data('table');
-    data = table.getSelectedItems();
-    data.forEach((row) => {
-        //console.log(typeof row)
-        console.log(row[1].replace(/<\/?[^>]+(>|$)/g, "").replace(/\s/g, ""));
-        console.log(row[2].replace(/<\/?[^>]+(>|$)/g, "").replace(/\s/g, ""));
-        console.log(row[4]);
-    });
-    $('ul button').attr('disabled', true);
+function addNewSession() {
+    console.log($('.form-session').css('opacity'));
+    if ($('.form-session.create').css('opacity') == '0') {
+        console.log($('.invalid_feedback'));
+        console.log($('.invalid_feedback').css('display'));
+        $('.form-session.create').css('opacity', '1');
+        $('.form-session.create').css('width', 'calc(50% + 165px)');
+        $('.form-session.create').css('height', 'auto');
+        $('.form-session.create').css('left', '0%');
+        $('.button.success').disabled = true;
+    }
+    else if ($('.form-session.create').css('opacity') == '1') {
+        const inputs = $('.form-input');
+        console.log(inputs);
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
+        console.log($('.invalid_feedback').css('display'));
+        $('.form-session.create')[0].reset();
+        $('.form-session.create').css('opacity', '0');
+        $('.form-session.create').css('width', '0px');
+        $('.form-session.create').css('height', '0px');
+        $('.form-session.create').css('left', '100%');
+    }
 }
 function getItems() {
     let addresses = [];
@@ -166,80 +192,102 @@ function getItems() {
     data_global = {
         "status": addresses
     };
-    $('ul button').attr('disabled', true);
+    $('button').attr('disabled', true);
     return data_global;
 }
 function bootPXE() {
     let items = getItems();
+    let bootSelect = document.querySelector("select");
+    let selected = bootSelect.options[bootSelect.selectedIndex].text;
     if (items['status'].length <= 0) {
-        alert('no items are selected. Try again.');
-        $('ul button').attr('disabled', false);
+        createMsg('warn', 0, 'No items are selected. Try again.');
+        createMsgEvent();
+        createMsgFade(10000);
+        $('button').attr('disabled', false);
         return;
     }
     for (var i = 0; i < items['status'].length; i++) {
-        items['status'][i].push('Pxe');
+        items['status'][i].push(selected);
     }
-    items['action'] = ['bootPXE'];
+    items['action'] = ['boot'];
     console.log(items);
     if (getCredentials(items) == "try again") {
+        $('button').attr('disabled', false);
         return;
     }
     let response = doRESTRequest(items, url, 'POST');
-    if (msg !== 'error') {
-        createMsg('info', 10000);
+    if (msg !== 'error' && msg != '') {
+        createMsg('warn', 10000);
         createMsgEvent();
+        location.reload();
     }
-    location.href = 'http://localhost:3000';
 }
 function changeLED() {
     items = getItems();
     if (items['status'].length <= 0) {
-        alert('no items are selected. Try again.');
-        $('ul button').attr('disabled', false);
+        createMsg('warn', 0, 'No items are selected. Try again.');
+        createMsgEvent();
+        createMsgFade(5000);
+        $('button').attr('disabled', false);
         return;
     }
     items['action'] = ['LED'];
     console.log(items);
     if (getCredentials(items) == "try again") {
+        $('button').attr('disabled', false);
         return;
     }
     let response = doRESTRequest(items, url, 'POST');
-    if (msg !== 'error') {
-        createMsg('info', 10000);
+    if (msg !== 'error' && msg != '') {
+        createMsg('warn', 10000);
         createMsgEvent();
+        location.reload();
     }
-    location.href = 'http://localhost:3000';
 }
 function reloadPage() {
     items = getItems();
     createMsg('info');
     createMsgEvent();
     createMsgFade(4500);
-    location.href = 'http://localhost:3000';
+    location.reload();
 }
-function changePower(option) {
+async function changePower(option) {
     items = getItems();
     if (items['status'].length <= 0) {
-        alert('no items are selected. Try again.');
-        $('ul button').attr('disabled', false);
+        createMsg('warn', 0, 'No items are selected. Try again.');
+        createMsgEvent();
+        createMsgFade(10000);
+        $('button').attr('disabled', false);
         return;
     }
     items['action'] = ['power', option];
     console.log(items);
     if (getCredentials(items) == "try again") {
+        $('button').attr('disabled', false);
         return;
     }
     let response = doRESTRequest(items, url, 'POST');
-    if (msg !== 'error') {
+    if (msg !== 'error' && msg != '') {
         createMsg('warn', 10000);
         createMsgEvent();
+        if (option == 'ForceOff') {
+            console.log('wait for off ...');
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            console.log('wait for off finished...');
+        }
+        location.reload();
     }
-    location.href = 'http://localhost:3000';
 }
 function getSessions() {
+    usernames = [];
     let sessionSelect = document.querySelector("select");
     let selected = sessionSelect.options[sessionSelect.selectedIndex].text;
     let options = sessionSelect.options;
+    console.log(options);
+    for (var i = 0; i < options.length; i++) {
+        usernames.push(options[i].text);
+    }
+    sessionStorage.setItem('sessionNames', JSON.stringify(usernames));
     console.log([selected, options.length]);
     return [selected, options.length];
 }
@@ -247,60 +295,22 @@ function getCredentials(payLoad) {
     if (payLoad['status'].length > 0) {
         let credentials = [];
         if (getSessions()[0] == "guest user" && getSessions()[1] <= 1) {
-            let username = prompt("Credentials are needed for this action. Please enter the username");
-            while (username === '') {
-                username = prompt("Please enter the username (can not be empty)");
-            }
-            while (sessionStorage.getItem('sessionNames').includes(username)) {
-                username = prompt("Username already in use! Try again ...");
-            }
-            if (username !== null) {
-                credentials.push(username);
-            }
-            else {
-                $('ul button').attr('disabled', false);
-                return;
-            }
-            let password = prompt("Please enter the password");
-            while (password === '') {
-                password = prompt("Please enter the password (can not be empty)");
-            }
-            if (password !== null) {
-                credentials.push(password);
-            }
-            else {
-                $('ul button').attr('disabled', false);
-                return;
-            }
-            if (credentials.length == 2) {
-                let usernames = [sessionStorage.getItem('sessionNames')];
-                let passwords = [sessionStorage.getItem('sessionPwds')];
-                console.log(typeof usernames);
-                console.log("username");
-                console.log(usernames);
-                usernames.push(username);
-                passwords.push(password);
-                console.log(usernames);
-                console.log(passwords);
-                usernames = usernames.filter(function (el) {
-                    return el != null && el != undefined && el != '';
-                });
-                console.log(usernames);
-                passwords = passwords.filter(function (el) {
-                    return el != null && el != undefined && el != '';
-                });
-                console.log(passwords);
-                sessionStorage.setItem('sessionNames', JSON.stringify(usernames));
-                sessionStorage.setItem('passwords', JSON.stringify(passwords));
-            }
-            payLoad['credentials'] = credentials;
+            msg = 'warn';
+            var info = 'Credentials log-in is needed for this action. Please add a new web session!';
+            createMsg(msg, 0, info);
+            createMsgEvent();
+            addNewSession();
+            return "try again";
         }
         else if (getSessions()[0] == "guest user" && getSessions()[1] > 1) {
-            alert('This action requires credentials log-ins. Please try another option for web sessions...');
+            msg = 'warn';
+            var info = 'This action requires credentials log-ins. Please try another option for web sessions...';
+            createMsg(msg, 0, info);
+            createMsgEvent();
             return "try again";
         }
         else {
-            alert('Using web session with credentials' + getSessions()[0]);
+            //alert('Using web session with credentials ' + getSessions()[0])
             credentials.push(getSessions()[0]);
             payLoad['credentials'] = credentials;
         }
@@ -310,6 +320,7 @@ function doRESTRequest(payLoad, url, method) {
     createMsg('info');
     createMsgEvent();
     createMsgFade(4500);
+    $('button').css('disabled', true);
     msg = '';
     console.log(payLoad);
     let http = new XMLHttpRequest();
@@ -318,25 +329,36 @@ function doRESTRequest(payLoad, url, method) {
     http.setRequestHeader("Content-type", "application/json");
     http.onreadystatechange = function () {
         if (http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
+            //alert(http.responseText)
             if (http.responseText == "Completed") {
                 msg = "success";
             }
             else if (http.responseText == "Failed Database") {
-                msg = "error";
-            }
-            else {
                 msg = "error-server";
             }
-            sessionStorage.setItem("msg", msg);
         }
+        else if (http.responseText == "Session Timeout" && http.status == 401) {
+            msg = '';
+            $('.form-session.time-out').css('opacity', '1');
+            $('.form-session.time-out').css('width', 'calc(50% + 165px)');
+            $('.form-session.time-out').css('height', 'auto');
+            $('.form-session.time-out').css('left', '0%');
+            $('.form-session.time-out').disabled = true;
+            $('.form-session.time-out input')[0].value = payLoad['credentials'][0];
+            var text = `<div class="alert warning" id="yellow-msg">
+                                    <span class="closebtn" >&times;</span>
+                                    <div class="info-box-content">
+                                        <h3>${http.responseText}!</h3>
+                                    </div>
+                     </div>`;
+            $('.form-session.time-out').prepend(text);
+            createMsgEvent();
+            $('button').attr('disabled', false);
+        }
+        else {
+            msg = "error";
+        }
+        sessionStorage.setItem("msg", msg);
     };
-    let sessions = JSON.parse(sessionStorage.getItem("sessionNames"));
-    let temp = {};
-    for (var i = 0; i < sessions.length; i++) {
-        temp[i] = sessions[i];
-    }
-    payLoad['sessions'] = temp;
     http.send(JSON.stringify(payLoad));
-    //$('ul button').attr('disabled',false)
 }
